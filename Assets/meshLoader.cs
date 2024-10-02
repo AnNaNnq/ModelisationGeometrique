@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Globalization;
+using System;
 
 public class MeshLoader : MonoBehaviour
 {
@@ -133,5 +134,39 @@ public class MeshLoader : MonoBehaviour
         }
 
         Debug.Log("=== Fin du tracé du maillage ===");
+    }
+
+    void SaveMeshToFile(string path)
+    {
+        try
+        {
+            using (StreamWriter writer = new StreamWriter(path))
+            {
+                writer.WriteLine("OFF");
+                writer.WriteLine($"{mesh.vertexCount} {mesh.triangles.Length / 3} 0");
+                foreach (Vector3 vertex in mesh.vertices)
+                {
+                    writer.WriteLine($"{vertex.x} {vertex.y} {vertex.z}");
+                }
+
+                for (int i = 0; i < mesh.triangles.Length; i += 3)
+                {
+                    writer.WriteLine($"3 {mesh.triangles[i]} {mesh.triangles[i + 1]} {mesh.triangles[i + 2]}");
+                }
+            }
+        }
+        catch
+        {
+            Debug.LogError("Erreur");
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            string absolutePath = Path.Combine(Application.dataPath, "saved_mesh.off");
+            SaveMeshToFile(absolutePath);
+        }
     }
 }
