@@ -136,37 +136,45 @@ public class MeshLoader : MonoBehaviour
         Debug.Log("=== Fin du tracé du maillage ===");
     }
 
-    void SaveMeshToFile(string path)
+    public static void SaveMeshToFile(Mesh mesh, string filePath)
     {
-        try
+        using (StreamWriter sw = new StreamWriter(filePath))
         {
-            using (StreamWriter writer = new StreamWriter(path))
-            {
-                writer.WriteLine("OFF");
-                writer.WriteLine($"{mesh.vertexCount} {mesh.triangles.Length / 3} 0");
-                foreach (Vector3 vertex in mesh.vertices)
-                {
-                    writer.WriteLine($"{vertex.x} {vertex.y} {vertex.z}");
-                }
+            sw.Write(MeshToString(mesh));
+        }
+        Debug.Log("Mesh saved to " + filePath);
+    }
 
-                for (int i = 0; i < mesh.triangles.Length; i += 3)
-                {
-                    writer.WriteLine($"3 {mesh.triangles[i]} {mesh.triangles[i + 1]} {mesh.triangles[i + 2]}");
-                }
-            }
-        }
-        catch
+    private static string MeshToString(Mesh mesh)
+    {
+        StringWriter meshString = new StringWriter();
+
+        foreach (Vector3 v in mesh.vertices)
         {
-            Debug.LogError("Erreur");
+            meshString.WriteLine(string.Format(CultureInfo.InvariantCulture, "v {0} {1} {2}", v.x, v.y, v.z));
         }
+
+        foreach (Vector3 n in mesh.normals)
+        {
+            meshString.WriteLine(string.Format(CultureInfo.InvariantCulture, "vn {0} {1} {2}", n.x, n.y, n.z));
+        }
+
+        for (int i = 0; i < mesh.triangles.Length; i += 3)
+        {
+            meshString.WriteLine(string.Format("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}",
+                mesh.triangles[i] + 1, mesh.triangles[i + 1] + 1, mesh.triangles[i + 2] + 1));
+        }
+
+        return meshString.ToString();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            string absolutePath = Path.Combine(Application.dataPath, "saved_mesh.off");
-            SaveMeshToFile(absolutePath);
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            Mesh lapin = meshFilter.mesh;
+            SaveMeshToFile(lapin, "Assets/Lapin2.obj");
         }
     }
 }
