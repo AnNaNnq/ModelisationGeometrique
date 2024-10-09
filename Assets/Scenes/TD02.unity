@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023f49c6e9a691148beaacc1d4f71b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filePath: Assets/bunny.off
+  filePath: Assets/TD02/bunny.off
 --- !u!23 &816534711
 MeshRenderer:
   m_ObjectHideFlags: 0
