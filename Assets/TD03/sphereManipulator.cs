@@ -4,19 +4,15 @@ using System.Collections.Generic;
 public class SphereManipulator : MonoBehaviour
 {
     public int voxelResolution = 10;
-    public List<Sphere> spheres = new List<Sphere>()
-    {
-        new Sphere(Vector3.zero, 7f),
-        new Sphere(new Vector3(20, 0, 0), 5f)
-    };
+    public Operation currentOperation = Operation.Union;
+    public GameObject voxelPrefab;
+    public List<Sphere> spheres;
 
     public enum Operation
     {
         Union,
         Intersection
     }
-
-    public Operation currentOperation = Operation.Union;
 
     void Start()
     {
@@ -68,7 +64,7 @@ public class SphereManipulator : MonoBehaviour
             case Operation.Union:
                 return IsVoxelInsideAnySphere(voxelPosition, voxelSize);
             case Operation.Intersection:
-                return IsVoxelInsideAllSpheres(voxelPosition, voxelSize);
+                return IsVoxelInsideAtLeastTwoSpheres(voxelPosition, voxelSize);
             default:
                 return false;
         }
@@ -86,16 +82,22 @@ public class SphereManipulator : MonoBehaviour
         return false;
     }
 
-    bool IsVoxelInsideAllSpheres(Vector3 voxelPosition, float voxelSize)
+    bool IsVoxelInsideAtLeastTwoSpheres(Vector3 voxelPosition, float voxelSize)
     {
+        int insideCount = 0;
+
         foreach (var sphere in spheres)
         {
-            if (!IsVoxelInsideSphere(voxelPosition, voxelSize, sphere))
+            if (IsVoxelInsideSphere(voxelPosition, voxelSize, sphere))
             {
-                return false;
+                insideCount++;
+            }
+            if (insideCount >= 2)
+            {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     bool IsVoxelInsideSphere(Vector3 voxelPosition, float voxelSize, Sphere sphere)
@@ -106,54 +108,16 @@ public class SphereManipulator : MonoBehaviour
 
     void CreateVoxelMesh(Vector3 position, float size)
     {
-        GameObject voxel = new GameObject("Voxel");
-
-        MeshFilter meshFilter = voxel.AddComponent<MeshFilter>();
-        MeshRenderer meshRenderer = voxel.AddComponent<MeshRenderer>();
-
-        meshFilter.mesh = CreateCubeMesh(size);
-        meshRenderer.material = new Material(Shader.Find("Standard"));
-
-        voxel.transform.position = position;
-        voxel.transform.parent = transform;
-    }
-
-    Mesh CreateCubeMesh(float size)
-    {
-        Mesh mesh = new Mesh();
-
-        Vector3[] vertices = {
-            new Vector3(0, 0, 0),
-            new Vector3(size, 0, 0),
-            new Vector3(size, size, 0),
-            new Vector3(0, size, 0),
-            new Vector3(0, 0, size),
-            new Vector3(size, 0, size),
-            new Vector3(size, size, size),
-            new Vector3(0, size, size)
-        };
-
-        int[] triangles = {
-            0, 2, 1, 0, 3, 2,
-            1, 6, 5, 1, 2, 6,
-            5, 7, 4, 5, 6, 7,
-            4, 3, 0, 4, 7, 3,
-            3, 6, 2, 3, 7, 6,
-            0, 5, 4, 0, 1, 5
-        };
-
-        Vector3[] normals = {
-            Vector3.back, Vector3.back, Vector3.back, Vector3.back,
-            Vector3.forward, Vector3.forward, Vector3.forward, Vector3.forward
-        };
-
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.normals = normals;
-
-        mesh.RecalculateNormals();
-
-        return mesh;
+        if (voxelPrefab != null)
+        {
+            GameObject voxel = Instantiate(voxelPrefab, position, Quaternion.identity);
+            voxel.transform.localScale = Vector3.one * size;
+            voxel.transform.parent = transform;
+        }
+        else
+        {
+            Debug.LogWarning("Voxel prefab ??");
+        }
     }
 
     void Generate()
