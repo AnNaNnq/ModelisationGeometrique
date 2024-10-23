@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 5765488178873996526}
   - component: {fileID: 1365049367675645587}
   - component: {fileID: 3233600464539760619}
+  - component: {fileID: -4620032013353289590}
+  - component: {fileID: 4674277318182247414}
+  - component: {fileID: -6440176142737353135}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -83,3 +86,69 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-4620032013353289590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812475448999624273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabc6d6d1d5a2c54d95777262141c531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potentiel: 0
+  violet: {fileID: 2100000, guid: 0df4563a87bef8248a424533de441ec5, type: 2}
+  rouge: {fileID: 2100000, guid: ddd12022470257242a5a0843f47b65bf, type: 2}
+  orange: {fileID: 2100000, guid: 1e29cf76dc3eaa1449092cb3ccc670d4, type: 2}
+  jaune: {fileID: 2100000, guid: ed469ece4e5c54e439628eaed58cdaca, type: 2}
+  vert: {fileID: 2100000, guid: d9eaae9af139c844ab7e7db579c8b3e5, type: 2}
+--- !u!65 &4674277318182247414
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812475448999624273}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-6440176142737353135
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812475448999624273}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
