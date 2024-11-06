@@ -174,7 +174,7 @@ public class MeshLoader : MonoBehaviour
         {
             MeshFilter meshFilter = GetComponent<MeshFilter>();
             Mesh lapin = meshFilter.mesh;
-            SaveMeshToFile(lapin, "Assets/TD02/Lapin2.obj");
+            SaveMeshToFile(lapin, "Assets/TD02/Buddha.obj");
         }
     }
 }
