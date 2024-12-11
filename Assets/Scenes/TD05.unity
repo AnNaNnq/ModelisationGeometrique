@@ -166,14 +166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439b0b6a54460224a84e8badb5d1b1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlPoints:
+  points:
   - {x: 1, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
-  - {x: 1, y: 0, z: 2}
+  - {x: 3, y: -2, z: 2}
   - {x: 2, y: 0, z: 1}
-  - {x: 1.7, y: 2, z: 1}
-  - {x: 1, y: 0, z: 0}
-  subdivisions: 5
+  iterations: 1
 --- !u!1 &1407628407
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  iterations: 1
+  iterations: 2
 --- !u!65 &1407628409
 BoxCollider:
   m_ObjectHideFlags: 0
